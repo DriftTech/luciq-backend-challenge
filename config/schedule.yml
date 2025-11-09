@@ -1,0 +1,4 @@
+redis_sync_job:
+    cron: "*/15 * * * *" # every hour
+    class: "RedisSyncJob"
+    queue: sync

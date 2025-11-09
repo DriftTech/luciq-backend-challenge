@@ -1,0 +1,99 @@
+services:
+  # MySQL database
+  db:
+    image: mysql:8.0
+    container_name: chat_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: chat_system
+      MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # Redis (for Sidekiq jobs and caching)
+  redis:
+    image: redis:7
+    container_name: chat_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  # Elasticsearch (for message search)
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.2.0
+    container_name: chat_elasticsearch
+    restart: unless-stopped
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: "false"
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -fsSL http://localhost:9200/_cluster/health || exit 1",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Rails API server
+  rails:
+    build:
+      context: .
+    container_name: chat_rails
+    command: bash -c "bundle exec rails db:migrate && bundle exec rake elasticsearch:reindex_messages && bundle exec rails s -b 0.0.0.0 -p 3000"
+    environment:
+      DATABASE_URL: mysql2://root:root@db:3306/chat_system
+      REDIS_URL: redis://redis:6379/0
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      elasticsearch:
+        condition: service_healthy
+
+  # Sidekiq background worker
+  worker:
+    build:
+      context: .
+    container_name: chat_worker
+    command: bundle exec sidekiq
+    environment:
+      DATABASE_URL: mysql2://root:root@db:3306/chat_system
+      REDIS_URL: redis://redis:6379/0
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    volumes:
+      - .:/app
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      elasticsearch:
+        condition: service_healthy
+
+volumes:
+  db_data:
+  redis_data:
+  es_data:

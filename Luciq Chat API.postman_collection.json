@@ -1,0 +1,337 @@
+{
+	"info": {
+		"_postman_id": "e8777831-78d6-4950-9b94-88d998b31a0c",
+		"name": "Luciq Chat API",
+		"description": "Collection for testing the Luciq chat backend.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2742162"
+	},
+	"item": [
+		{
+			"name": "Applications",
+			"item": [
+				{
+					"name": "Create Application",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"application\": {\n    \"name\": \"MyApp\"\n  }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/applications",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Applications",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/applications",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Application by Token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/applications/{{application_token}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"applications",
+								"{{application_token}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Application",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"application\": {\n    \"name\": \"UpdatedAppName\"\n  }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/applications/{{application_token}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"applications",
+								"{{application_token}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Chats",
+			"item": [
+				{
+					"name": "Create Chat",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/applications/{{application_token}}/chats",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"applications",
+								"{{application_token}}",
+								"chats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Chats",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/applications/{{application_token}}/chats",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"applications",
+								"{{application_token}}",
+								"chats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Chat by Number",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/applications/{{application_token}}/chats/{{chat_number}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"applications",
+								"{{application_token}}",
+								"chats",
+								"{{chat_number}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Messages",
+			"item": [
+				{
+					"name": "Create Message",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"body\": \"Hello world!\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/applications/{{application_token}}/chats/{{chat_number}}/messages",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"applications",
+								"{{application_token}}",
+								"chats",
+								"{{chat_number}}",
+								"messages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Message",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"body\": \"Updated message content\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/applications/{{application_token}}/chats/{{chat_number}}/messages/{{message_number}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"applications",
+								"{{application_token}}",
+								"chats",
+								"{{chat_number}}",
+								"messages",
+								"{{message_number}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Messages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/applications/{{application_token}}/chats/{{chat_number}}/messages",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"applications",
+								"{{application_token}}",
+								"chats",
+								"{{chat_number}}",
+								"messages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Message by Number",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/applications/{{application_token}}/chats/{{chat_number}}/messages/{{message_number}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"applications",
+								"{{application_token}}",
+								"chats",
+								"{{chat_number}}",
+								"messages",
+								"{{message_number}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Messages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/applications/{{application_token}}/chats/{{chat_number}}/messages/search?q=hello",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"applications",
+								"{{application_token}}",
+								"chats",
+								"{{chat_number}}",
+								"messages",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "hello"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

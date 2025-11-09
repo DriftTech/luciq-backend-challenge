@@ -1,0 +1,9 @@
+:verbose: false
+:pidfile: ./tmp/pids/sidekiq.pid
+:logfile: ./log/sidekiq.log
+:timeout: 25
+:queues:
+  - index
+  - realtime
+  - sync
+  - default

@@ -75,7 +75,7 @@ This will start the following services:
 ## 🧩 API Overview
 | Resource    | Endpoint                                                                 | Description                    |
 |-------------|--------------------------------------------------------------------------|--------------------------------|
-| Application | `POST /applications`                                                     | Create a new application       |
+| Applications | `POST /applications`                                                     | Create a new application       |
 |             | `GET /applications`                                                      | List all applications          |
 |             | `GET /applications/:token`                                               | Get application information    |
 |             | `PATCH /applications/:token`                                             | Update application information |
